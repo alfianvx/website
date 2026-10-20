@@ -5,6 +5,8 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
+import netlify from "@astrojs/netlify";
+
 // Single source of truth for the production origin — feeds canonical URLs,
 // og:url, the sitemap, robots.txt and JSON-LD. When the final domain is
 // known, change it here (or set the SITE_URL env var in the deploy).
@@ -13,9 +15,11 @@ const site = process.env.SITE_URL ?? "https://www.gusjabungaf.dev";
 // https://astro.build/config
 export default defineConfig({
   site,
+
   vite: {
     plugins: [tailwindcss()],
   },
+
   integrations: [
     react(),
     sitemap(),
@@ -24,6 +28,7 @@ export default defineConfig({
     // the site stays a plain static build with no adapter.
     ...(process.env.SKIP_KEYSTATIC ? [] : [keystatic()]),
   ],
+
   fonts: [
     {
       // Figtree (by Evan Desmond) via Google Fonts — Astro downloads the
@@ -38,4 +43,6 @@ export default defineConfig({
       fallbacks: ["ui-sans-serif", "system-ui", "sans-serif"],
     },
   ],
+
+  adapter: netlify(),
 });
