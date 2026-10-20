@@ -46,7 +46,13 @@
   }
 
   html.dark body > header {
-    background-color: rgb(28 25 23 / 0.25);
+    /* Opaque — identical to the dark page background (stone-900). The
+       reference's saturate/blur are disabled here: with an opaque
+       background they only tint the header away from the page color. */
+    background-color: rgb(28 25 23);
+    filter: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   main {
@@ -86,18 +92,27 @@
     @apply text-current decoration-black/15 underline-offset-2 transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/25 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50;
   }
 
-  /* Staggered entry animation — mirrors the reference: every `.animate`
-     element fades up, triggered on load, one element every 150ms (see the
-     `animate()` helper in BaseLayout). */
+  /* Staggered entry animation — every `.animate` element fades up, all
+     triggered on load (see the `animate()` helper in BaseLayout): one
+     element every 30ms, each reveal taking 0.2s — the page reads as
+     appearing in one quick cascade instead of making users wait. */
   .animate {
     opacity: 0;
     transform: translateY(0.75rem);
-    transition: all 0.7s cubic-bezier(0, 0, 0.2, 1);
+    transition: all 0.2s cubic-bezier(0, 0, 0.2, 1);
   }
 
   .animate.show {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* Hand-wave for the greeting emoji — pivots near the bottom like a real
+     wrist wave: three swings, then a rest, on a loop. */
+  .wave {
+    display: inline-block;
+    transform-origin: 70% 70%;
+    animation: wave-hand 2.4s ease-in-out infinite;
   }
 
   /* "Back to top" only appears once the page is scrolled. */
@@ -117,5 +132,29 @@
       transform: none;
       transition: none;
     }
+
+    .wave {
+      animation: none;
+    }
+  }
+}
+
+@keyframes wave-hand {
+  0%,
+  55%,
+  100% {
+    transform: rotate(0deg);
+  }
+  12% {
+    transform: rotate(14deg);
+  }
+  24% {
+    transform: rotate(-8deg);
+  }
+  36% {
+    transform: rotate(14deg);
+  }
+  48% {
+    transform: rotate(-6deg);
   }
 }
