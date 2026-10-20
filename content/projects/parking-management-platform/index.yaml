@@ -1,0 +1,13 @@
+title: "Parking Management Platform"
+description: "Web platform for managing parking operations, from vehicle entry records to reporting."
+period: "2024 - 2025"
+role: "Fullstack Developer @ Ladeva Software"
+tech:
+  - "Next.js"
+  - "CodeIgniter"
+  - "MySQL"
+highlights:
+  - "Built across both a modern Next.js stack and a legacy CodeIgniter backend."
+  - "Implemented operational dashboards and reporting views for day-to-day management."
+  - "Maintained and extended an existing codebase while keeping deployments stable via CI/CD."
+order: 5

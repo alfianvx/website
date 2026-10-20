@@ -1,0 +1,65 @@
+---
+import BackLink from "../../components/ui/BackLink.astro";
+import Container from "../../components/ui/Container.astro";
+import { getPosts } from "../../data/posts";
+import { profile } from "../../data/site";
+import { formatDate } from "../../utils/date";
+import { readingTimeOf } from "../../utils/posts";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { Post } from "../../types";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const pageURL = new URL(
+  Astro.url.pathname,
+  Astro.site ?? Astro.url.origin,
+).toString();
+const schema = {
+  "@type": "BlogPosting",
+  headline: post.title,
+  description: post.description,
+  datePublished: post.pubDate,
+  url: pageURL,
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageURL },
+  author: {
+    "@type": "Person",
+    name: profile.name,
+    url: new URL("/", Astro.site ?? Astro.url.origin).toString(),
+  },
+  publisher: { "@type": "Person", name: profile.name },
+};
+---
+
+<BaseLayout title={post.title} description={post.description} schema={schema}>
+  <Container>
+    <div class="animate">
+      <BackLink href="/blog" label="Back to blog" />
+    </div>
+    <div class="my-10 space-y-1">
+      <div class="animate flex items-center gap-1.5">
+        <div class="text-sm">
+          <time datetime={post.pubDate}>{formatDate(post.pubDate)}</time>
+        </div>
+        <span aria-hidden="true">•</span>
+        <div class="text-sm">{readingTimeOf(post)}</div>
+      </div>
+      <h1 class="animate text-2xl font-semibold text-black dark:text-white">
+        {post.title}
+      </h1>
+    </div>
+    <article class="animate prose max-w-none dark:prose-invert">
+      {post.content.map((paragraph) => <p>{paragraph}</p>)}
+    </article>
+  </Container>
+</BaseLayout>

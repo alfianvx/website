@@ -1,0 +1,22 @@
+---
+import type { Post } from "../../types";
+import PostCard from "../blog/PostCard.astro";
+import Section from "../ui/Section.astro";
+
+interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+---
+
+<Section
+  title="Latest posts"
+  href="/blog"
+  linkLabel="See all posts"
+  class="space-y-6"
+>
+  <ul class="flex flex-col gap-4">
+    {posts.map((post) => <li><PostCard post={post} /></li>)}
+  </ul>
+</Section>

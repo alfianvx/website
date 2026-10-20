@@ -1,0 +1,14 @@
+title: "Nihonbashi Online Class"
+description: "E-learning platform for Japanese language courses with scheduling, learning materials, and enrollment management."
+period: "2026"
+role: "Fullstack Developer @ Ladeva Software"
+tech:
+  - "Next.js"
+  - "React"
+  - "TypeScript"
+  - "MySQL"
+highlights:
+  - "Built course scheduling, learning material delivery, and enrollment management flows."
+  - "Handled cohort-based content structure for both self-paced and instructor-led courses."
+  - "Designed the database schema backing courses, schedules, and student enrollments."
+order: 1

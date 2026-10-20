@@ -1,0 +1,46 @@
+---
+import PageHeader from "../components/ui/PageHeader.astro";
+import Container from "../components/ui/Container.astro";
+import TextLink from "../components/ui/TextLink.astro";
+import WorkItem from "../components/work/WorkItem.astro";
+import { profile, socialLinks } from "../data/site";
+import { getWorkExperience } from "../data/work";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const workExperience = await getWorkExperience();
+const linkedin = socialLinks.find((link) => link.label === "LinkedIn");
+---
+
+<BaseLayout
+  title="Work"
+  description="Work experience of Gus Jabung Al Fiansyah as a fullstack developer."
+>
+  <Container>
+    <div class="space-y-10">
+      <PageHeader title="Work" />
+      <div>
+        For more information, see my{" "}
+        {
+          linkedin && (
+            <TextLink
+              href={linkedin.href}
+              external
+              ariaLabel={`${profile.name} on LinkedIn`}
+            >
+              LinkedIn
+            </TextLink>
+          )
+        }.
+      </div>
+      <ul class="flex flex-col space-y-4">
+        {
+          workExperience.map((experience) => (
+            <li class="animate">
+              <WorkItem experience={experience} showHighlights />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Container>
+</BaseLayout>

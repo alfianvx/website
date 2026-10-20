@@ -1,0 +1,121 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Class-based dark mode: the theme script in BaseLayout toggles
+   `dark` on <html> (light / dark / system, persisted in localStorage). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Register the Figtree family (configured in astro.config.mjs and
+   emitted into the page head by <Font />) as the site-wide font. `inline` is
+   required so utilities resolve to var(--font-figtree) at usage sites. */
+@theme inline {
+  --font-sans: var(--font-figtree);
+  --font-serif: var(--font-figtree);
+}
+
+@layer base {
+  html {
+    overflow-y: scroll;
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply flex min-h-svh flex-col bg-stone-100 text-black/50 antialiased dark:bg-stone-900 dark:text-white/75;
+  }
+
+  /* Fixed, translucent site header — content scrolls underneath it.
+     Scoped to the direct child of <body> so nested <header> elements (e.g.
+     inside an article) stay in the normal flow. Values mirror the
+     reference: stone-100 at 75% (dark: stone-900 at 25%) + blur(4px),
+     with saturate(2) like the reference's header filter. */
+  body > header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding-block: 1.25rem;
+    background-color: rgb(245 245 244 / 0.75);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    filter: saturate(2);
+  }
+
+  html.dark body > header {
+    background-color: rgb(28 25 23 / 0.25);
+  }
+
+  main {
+    @apply flex-1 py-32;
+  }
+
+  footer {
+    @apply py-5 text-sm;
+  }
+
+  /* Keep anchor targets clear of the fixed header. */
+  section[id] {
+    scroll-margin-top: 6rem;
+  }
+
+  /* Hide scrollbars site-wide — wheel, touch and keyboard scrolling still
+     work exactly as before. */
+  * {
+    scrollbar-width: none;
+  }
+
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Article prose reads in the site font, like a reading blog. */
+  .prose
+    :is(p, h1, h2, h3, h4, h5, h6, li, blockquote):not(
+      :where([class~="not-prose"], [class~="not-prose"] *)
+    ) {
+    font-family: var(--font-figtree);
+  }
+
+  /* In-content links behave like the reference: current-color text with a
+     faint underline that darkens on hover (and inverts in dark mode). */
+  .prose a {
+    @apply text-current decoration-black/15 underline-offset-2 transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/25 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50;
+  }
+
+  /* Staggered entry animation — mirrors the reference: every `.animate`
+     element fades up, triggered on load, one element every 150ms (see the
+     `animate()` helper in BaseLayout). */
+  .animate {
+    opacity: 0;
+    transform: translateY(0.75rem);
+    transition: all 0.7s cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .animate.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* "Back to top" only appears once the page is scrolled. */
+  html #back-to-top {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  html.scrolled #back-to-top {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate,
+    .animate.show {
+      transform: none;
+      transition: none;
+    }
+  }
+}

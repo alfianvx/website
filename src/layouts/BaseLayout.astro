@@ -1,0 +1,232 @@
+---
+import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
+import Footer from "../components/layout/Footer.astro";
+import Header from "../components/layout/Header.astro";
+import { profile, socialLinks } from "../data/site";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Extra schema.org node merged into the page's JSON-LD @graph. */
+  schema?: Record<string, unknown>;
+}
+
+const { title, description = profile.defaultDescription, schema } =
+  Astro.props;
+const pageTitle = title ? `${title} | ${profile.name}` : profile.name;
+// Canonical URL — derived from `site` in astro.config.mjs.
+const canonicalURL = new URL(
+  Astro.url.pathname,
+  Astro.site ?? Astro.url.origin,
+);
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      name: profile.name,
+      jobTitle: "Software Engineer",
+      url: canonicalURL.toString(),
+      email: socialLinks.find((link) => link.href.startsWith("mailto:"))?.href,
+      sameAs: socialLinks
+        .filter((link) => !link.href.startsWith("mailto:"))
+        .map((link) => link.href),
+      description: profile.defaultDescription,
+    },
+    ...(schema ? [schema] : []),
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <Font cssVariable="--font-figtree" preload />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content={profile.name} />
+    <meta
+      name="theme-color"
+      content="#f5f5f4"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#1c1917"
+      media="(prefers-color-scheme: dark)"
+    />
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLd)}
+    ></script>
+    <ClientRouter />
+    <script is:inline>
+      // Keep the incoming page's font preloads from being re-fetched on
+      // every view-transition swap.
+      document.addEventListener("astro:before-swap", (event) => {
+        [...event.newDocument.head.querySelectorAll('link[as="font"]')].forEach(
+          (link) => link.remove(),
+        );
+      });
+
+      // Site behaviors (mirrors the reference): theme toggle, staggered
+      // `.animate` reveals, and the back-to-top pill. Runs on first load and
+      // again after every view-transition swap.
+      function init() {
+        preloadTheme();
+        onScroll();
+        animate();
+
+        const backToTop = document.getElementById("back-to-top");
+        backToTop?.addEventListener("click", (event) => scrollToTop(event));
+
+        const lightThemeButton =
+          document.getElementById("light-theme-button");
+        lightThemeButton?.addEventListener("click", () => {
+          localStorage.setItem("theme", "light");
+          toggleTheme(false);
+        });
+
+        const darkThemeButton = document.getElementById("dark-theme-button");
+        darkThemeButton?.addEventListener("click", () => {
+          localStorage.setItem("theme", "dark");
+          toggleTheme(true);
+        });
+
+        const systemThemeButton =
+          document.getElementById("system-theme-button");
+        systemThemeButton?.addEventListener("click", () => {
+          localStorage.setItem("theme", "system");
+          toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+        });
+
+        window
+          .matchMedia("(prefers-color-scheme: dark)")
+          .addEventListener("change", (event) => {
+            if (localStorage.theme === "system") {
+              toggleTheme(event.matches);
+            }
+          });
+
+        document.addEventListener("scroll", onScroll);
+      }
+
+      function animate() {
+        document.querySelectorAll(".animate").forEach((element, index) => {
+          setTimeout(() => {
+            element.classList.add("show");
+          }, index * 150);
+        });
+      }
+
+      function onScroll() {
+        document.documentElement.classList.toggle(
+          "scrolled",
+          window.scrollY > 0,
+        );
+      }
+
+      function scrollToTop(event) {
+        event.preventDefault();
+        if (window.lenis) {
+          // Ride the same easing curve as the rest of the page.
+          window.lenis.scrollTo(0);
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }
+
+      function toggleTheme(dark) {
+        // Disable transitions while the color scheme flips.
+        const css = document.createElement("style");
+        css.appendChild(
+          document.createTextNode("* { transition: none !important; }"),
+        );
+        document.head.appendChild(css);
+
+        document.documentElement.classList.toggle("dark", dark);
+
+        window.getComputedStyle(css).opacity;
+        document.head.removeChild(css);
+      }
+
+      function preloadTheme() {
+        const userTheme = localStorage.theme;
+
+        if (userTheme === "light" || userTheme === "dark") {
+          toggleTheme(userTheme === "dark");
+        } else {
+          toggleTheme(
+            window.matchMedia("(prefers-color-scheme: dark)").matches,
+          );
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => init());
+      document.addEventListener("astro:after-swap", () => init());
+      preloadTheme();
+    </script>
+    <script>
+      // Inertial page scrolling (Lenis) — the "buttery" eased scroll feel.
+      // Re-inits after every view-transition swap, and is skipped entirely
+      // when the user prefers reduced motion.
+      import Lenis from "lenis";
+
+      let lenis: Lenis | null = null;
+      let rafId = 0;
+
+      function initSmoothScroll() {
+        if (rafId) cancelAnimationFrame(rafId);
+        lenis?.destroy();
+        lenis = null;
+
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          return;
+        }
+
+        lenis = new Lenis();
+        (window as any).lenis = lenis;
+
+        const raf = (time: number) => {
+          lenis?.raf(time);
+          rafId = requestAnimationFrame(raf);
+        };
+        rafId = requestAnimationFrame(raf);
+      }
+
+      document.addEventListener("DOMContentLoaded", initSmoothScroll);
+      document.addEventListener("astro:page-load", initSmoothScroll);
+    </script>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <noscript>
+      <style is:inline>
+        /* Without JS nothing adds `.show` — reveal everything instead. */
+        .animate {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
+  </body>
+</html>

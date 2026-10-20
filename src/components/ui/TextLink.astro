@@ -1,0 +1,29 @@
+---
+interface Props {
+  href: string;
+  /** Opens the link in a new tab (adds `rel="noopener noreferrer"`). */
+  external?: boolean;
+  ariaLabel?: string;
+  class?: string;
+}
+
+const {
+  href,
+  external = false,
+  ariaLabel,
+  class: className = "",
+} = Astro.props;
+---
+
+<a
+  href={href}
+  target={external ? "_blank" : "_self"}
+  rel={external ? "noopener noreferrer" : undefined}
+  aria-label={ariaLabel}
+  class:list={[
+    "inline-block text-current decoration-black/15 transition-colors duration-300 ease-in-out hover:decoration-black/25 hover:text-black dark:decoration-white/30 dark:hover:decoration-white/50 dark:hover:text-white",
+    className,
+  ]}
+>
+  <slot />
+</a>

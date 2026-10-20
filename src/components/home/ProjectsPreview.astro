@@ -1,0 +1,22 @@
+---
+import type { Project } from "../../types";
+import ProjectCard from "../projects/ProjectCard.astro";
+import Section from "../ui/Section.astro";
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<Section
+  title="Recent projects"
+  href="/projects"
+  linkLabel="See all projects"
+  class="space-y-6"
+>
+  <ul class="flex flex-col gap-4">
+    {projects.map((project) => <li><ProjectCard project={project} /></li>)}
+  </ul>
+</Section>

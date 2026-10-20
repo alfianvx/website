@@ -1,0 +1,14 @@
+title: "Albatross Rent Car"
+description: "Car rental booking platform covering vehicle listings, availability, reservations, and rental management."
+period: "2026"
+role: "Fullstack Developer @ Ladeva Software"
+tech:
+  - "Next.js"
+  - "React"
+  - "TypeScript"
+  - "PostgreSQL"
+highlights:
+  - "Built vehicle listings with availability checks and a reservation flow end to end."
+  - "Developed the rental management side for admins to track bookings and vehicle status."
+  - "Balanced static and dynamic rendering to keep listing pages fast."
+order: 2

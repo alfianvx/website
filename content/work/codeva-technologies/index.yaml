@@ -1,0 +1,10 @@
+company: "CODEVA TECHNOLOGIES"
+role: "Fullstack Developer"
+period: "Jan 2025 - Dec 2025"
+highlights:
+  - "Built Mini Commerce, an online shop platform for a clothing distro brand, covering product catalog, product detail pages, and shopping cart flow."
+  - "Developed reusable, type-safe UI components with React and TypeScript to keep the codebase consistent and maintainable as features grew."
+  - "Implemented client-side routing and page structure using Next.js, balancing static and dynamic rendering for better load performance."
+  - "Wrote component and integration tests using Vitest to catch regressions early and maintain code quality across releases."
+  - "Collaborated closely with design references to ensure the storefront UI matched brand identity and remained responsive across devices."
+order: 2

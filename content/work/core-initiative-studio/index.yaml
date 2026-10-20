@@ -1,0 +1,9 @@
+company: "CORE INITIATIVE STUDIO"
+role: "Frontend Developer Intern"
+period: "Mar 2024 - Jul 2024"
+highlights:
+  - "Built a clothing e-commerce frontend using Vue.js, focused on responsive UI and product browsing experience."
+  - "Wrote unit tests with Jest to ensure component reliability and reduce regression bugs."
+  - "Integrated Firebase for backend services including data storage and authentication."
+  - "Worked within a CI/CD and Docker-based workflow to support consistent testing and deployment."
+order: 4

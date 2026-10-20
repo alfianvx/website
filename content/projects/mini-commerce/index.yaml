@@ -1,0 +1,14 @@
+title: "Mini Commerce"
+description: "Online shop platform for a clothing distro brand, covering product catalog, product detail pages, and shopping cart flow."
+period: "2025"
+role: "Fullstack Developer @ Codeva Technologies"
+tech:
+  - "Next.js"
+  - "React"
+  - "TypeScript"
+  - "Vitest"
+highlights:
+  - "Developed reusable, type-safe UI components to keep the codebase consistent as features grew."
+  - "Implemented client-side routing balancing static and dynamic rendering for load performance."
+  - "Wrote component and integration tests with Vitest to catch regressions early."
+order: 3

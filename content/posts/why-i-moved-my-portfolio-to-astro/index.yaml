@@ -1,0 +1,7 @@
+title: "Why I Moved My Portfolio to Astro"
+description: "A short take on shipping less JavaScript without giving up a pleasant developer experience."
+pubDate: "2026-09-12"
+content:
+  - "This is a placeholder post for the portfolio demo. It exists so the blog section has something realistic to render while the real writing catches up."
+  - "The idea was simple: most portfolio pages don't need a client-side framework. They need fast HTML, a bit of styling, and content that is easy to update. A static-first approach fits that shape well."
+  - "In practice this means pages ship almost no JavaScript, content lives in plain files, and deployment is a single build step. The result is a site that loads instantly and stays boring to maintain — in the best way."

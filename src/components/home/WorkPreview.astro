@@ -1,0 +1,24 @@
+---
+import type { WorkExperience } from "../../types";
+import Section from "../ui/Section.astro";
+import WorkItem from "../work/WorkItem.astro";
+
+interface Props {
+  experiences: WorkExperience[];
+}
+
+const { experiences } = Astro.props;
+---
+
+<Section
+  title="Work Experience"
+  href="/work"
+  linkLabel="See all work"
+  class="space-y-6"
+>
+  <ul class="flex flex-col space-y-4">
+    {experiences.map((experience) => (
+      <li><WorkItem experience={experience} /></li>
+    ))}
+  </ul>
+</Section>

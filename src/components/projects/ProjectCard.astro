@@ -1,0 +1,16 @@
+---
+import type { Project } from "../../types";
+import CardLink from "../ui/CardLink.astro";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<CardLink
+  href={`/projects/${project.slug}`}
+  title={project.title}
+  description={project.description}
+/>

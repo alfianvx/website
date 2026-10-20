@@ -1,0 +1,20 @@
+---
+import BackLink from "../components/ui/BackLink.astro";
+import Container from "../components/ui/Container.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Page not found"
+  description="The page you are looking for does not exist."
+>
+  <Container class="space-y-6">
+    <h1 class="animate font-semibold text-black dark:text-white">404</h1>
+    <p class="animate">
+      Sorry, the page you're looking for doesn't exist or has moved.
+    </p>
+    <div class="animate">
+      <BackLink href="/" label="Back to home" />
+    </div>
+  </Container>
+</BaseLayout>

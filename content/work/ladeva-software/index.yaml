@@ -1,0 +1,9 @@
+company: "LADEVA SOFTWARE"
+role: "Fullstack Developer"
+period: "Jan 2024 - Present"
+highlights:
+  - "Built and maintained multiple production web platforms across different industries, including a creative agency company profile, a car rental booking system, a parking management platform, and a Japanese language e-learning site."
+  - "Developed an internal project management CRM for Ladeva, streamlining company workflows and cross-project tracking."
+  - "Delivered end-to-end full-stack solutions spanning UI implementation, backend integration, and database design across both modern (Next.js, React) and legacy (CodeIgniter) ecosystems."
+  - "Collaborated within a Linux-based development environment with CI/CD pipelines for consistent, reliable deployments."
+order: 1

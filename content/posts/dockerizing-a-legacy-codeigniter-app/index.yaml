@@ -1,0 +1,7 @@
+title: "Dockerizing a Legacy CodeIgniter App"
+description: "Notes from containerizing a legacy PHP codebase so local setups stop breaking."
+pubDate: "2026-05-18"
+content:
+  - "This is a placeholder post for the portfolio demo. It exists so the blog section has something realistic to render while the real writing catches up."
+  - "The main win of containerizing a legacy app isn't performance — it's repeatability. Once the PHP version, extensions, and database are pinned in a compose file, onboarding a new developer takes minutes instead of an afternoon."
+  - "The trickiest part was untangling environment assumptions baked into the code: absolute paths, hardcoded hosts, and config that only worked on one particular machine. Writing those down is half the value of the exercise."

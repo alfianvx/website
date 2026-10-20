@@ -1,0 +1,36 @@
+---
+import TextLink from "../ui/TextLink.astro";
+import Section from "../ui/Section.astro";
+import { connectMessage, profile, socialLinks } from "../../data/site";
+---
+
+<Section id="lets-connect" title="Let's Connect" class="space-y-4">
+  <article class="prose max-w-none dark:prose-invert">
+    <p>{connectMessage}</p>
+  </article>
+  <ul class="flex flex-wrap gap-2">
+    {
+      socialLinks.map((link, index) => {
+        const isEmail = link.href.startsWith("mailto:");
+        return (
+          <li class={isEmail ? "line-clamp-1" : "flex gap-x-2 text-nowrap"}>
+            <TextLink
+              href={link.href}
+              external={!isEmail}
+              ariaLabel={
+                isEmail
+                  ? `Email ${profile.name}`
+                  : `${profile.name} on ${link.label}`
+              }
+            >
+              {link.label}
+            </TextLink>
+            {index < socialLinks.length - 1 && (
+              <span aria-hidden="true">/</span>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+</Section>

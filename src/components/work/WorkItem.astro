@@ -1,0 +1,29 @@
+---
+import type { WorkExperience } from "../../types";
+
+interface Props {
+  experience: WorkExperience;
+  /** Render the full bullet list (used on the /work page). */
+  showHighlights?: boolean;
+}
+
+const { experience, showHighlights = false } = Astro.props;
+const { company, role, period, highlights } = experience;
+---
+
+<div>
+  <div class="flex flex-wrap items-baseline justify-between gap-x-2">
+    <div class="font-semibold text-black dark:text-white">{company}</div>
+    <div class="text-sm opacity-75">{period}</div>
+  </div>
+  <div class="text-sm opacity-75">{role}</div>
+  {
+    showHighlights && highlights.length > 0 && (
+      <ul class="mt-2 list-disc space-y-1 pl-5 text-sm">
+        {highlights.map((highlight) => (
+          <li>{highlight}</li>
+        ))}
+      </ul>
+    )
+  }
+</div>

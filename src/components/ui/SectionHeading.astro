@@ -1,0 +1,17 @@
+---
+import TextLink from "./TextLink.astro";
+
+interface Props {
+  title: string;
+  /** Optional "See all ..." link on the right side of the heading. */
+  href?: string;
+  linkLabel?: string;
+}
+
+const { title, href, linkLabel = "See all" } = Astro.props;
+---
+
+<div class="flex flex-wrap items-center justify-between gap-y-2">
+  <h2 class="font-semibold text-black dark:text-white">{title}</h2>
+  {href && <TextLink href={href}>{linkLabel}</TextLink>}
+</div>

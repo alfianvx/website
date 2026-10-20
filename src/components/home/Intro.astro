@@ -1,0 +1,9 @@
+---
+import { profile } from "../../data/site";
+---
+
+<section>
+  <article class="prose max-w-none dark:prose-invert">
+    {profile.intro.map((paragraph) => <p class="animate">{paragraph}</p>)}
+  </article>
+</section>

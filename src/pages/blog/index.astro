@@ -1,0 +1,40 @@
+---
+import PostCard from "../../components/blog/PostCard.astro";
+import PageHeader from "../../components/ui/PageHeader.astro";
+import Container from "../../components/ui/Container.astro";
+import { getPosts } from "../../data/posts";
+import { groupPostsByYear } from "../../utils/posts";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const posts = await getPosts();
+const postsByYear = groupPostsByYear(posts);
+---
+
+<BaseLayout
+  title="Blog"
+  description="A collection of articles on things I learn while building."
+>
+  <Container>
+    <div class="space-y-10">
+      <PageHeader title="Blog" />
+      <div class="space-y-4">
+        {
+          postsByYear.map(([year, yearPosts]) => (
+            <section class="animate space-y-4">
+              <h2 class="font-semibold text-black dark:text-white">{year}</h2>
+              <div>
+                <ul class="flex flex-col gap-4">
+                  {yearPosts.map((post) => (
+                    <li>
+                      <PostCard post={post} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+          ))
+        }
+      </div>
+    </div>
+  </Container>
+</BaseLayout>

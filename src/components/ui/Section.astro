@@ -1,0 +1,19 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+
+interface Props {
+  id?: string;
+  title?: string;
+  /** Optional "See all ..." link rendered next to the title. */
+  href?: string;
+  linkLabel?: string;
+  class?: string;
+}
+
+const { id, title, href, linkLabel, class: className = "" } = Astro.props;
+---
+
+<section id={id} class:list={["animate", className]}>
+  {title && <SectionHeading title={title} href={href} linkLabel={linkLabel} />}
+  <slot />
+</section>

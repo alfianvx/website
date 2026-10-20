@@ -1,0 +1,14 @@
+title: "Prakerja Certification Site"
+description: "Certification site handling certification workflows for government-subsidized training programs."
+period: "2024"
+role: "Fullstack Developer Intern @ Vocasia"
+tech:
+  - "PHP"
+  - "MySQL"
+  - "MariaDB"
+  - "Docker"
+highlights:
+  - "Built the certification workflow from participant data through certificate issuance."
+  - "Worked across MySQL and MariaDB-backed systems, containerized with Docker."
+  - "Supported related platforms in the same ecosystem, including a bootcamp course platform."
+order: 6

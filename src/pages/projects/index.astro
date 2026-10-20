@@ -1,0 +1,29 @@
+---
+import ProjectCard from "../../components/projects/ProjectCard.astro";
+import PageHeader from "../../components/ui/PageHeader.astro";
+import Container from "../../components/ui/Container.astro";
+import { getProjects } from "../../data/projects";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const projects = await getProjects();
+---
+
+<BaseLayout
+  title="Projects"
+  description="Selected projects by Gus Jabung Al Fiansyah."
+>
+  <Container>
+    <div class="space-y-10">
+      <PageHeader title="Projects" />
+      <ul class="animate flex flex-col gap-4">
+        {
+          projects.map((project) => (
+            <li>
+              <ProjectCard project={project} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Container>
+</BaseLayout>

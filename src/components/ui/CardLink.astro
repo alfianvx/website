@@ -1,0 +1,28 @@
+---
+import ArrowIcon from "./ArrowIcon.astro";
+
+interface Props {
+  href: string;
+  title: string;
+  description?: string;
+  ariaLabel?: string;
+}
+
+const { href, title, description, ariaLabel } = Astro.props;
+---
+
+<a
+  href={href}
+  aria-label={ariaLabel ?? title}
+  class="group relative flex flex-nowrap rounded-lg border border-black/15 py-3 pr-10 pl-4 transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white"
+>
+  <div class="flex flex-1 flex-col truncate">
+    <div class="truncate font-semibold">{title}</div>
+    {
+      description && (
+        <div class="truncate text-sm">{description}</div>
+      )
+    }
+  </div>
+  <ArrowIcon class="absolute top-1/2 right-2 -translate-y-1/2" />
+</a>

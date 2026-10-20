@@ -1,0 +1,17 @@
+---
+interface Props {
+  items: string[];
+}
+
+const { items } = Astro.props;
+---
+
+<ul class="flex flex-wrap gap-1.5">
+  {
+    items.map((item) => (
+      <li class="rounded-full border border-black/15 px-2.5 py-0.5 text-xs dark:border-white/20">
+        {item}
+      </li>
+    ))
+  }
+</ul>

@@ -1,16 +1,37 @@
 ---
+import Connect from "../components/home/Connect.astro";
+import Intro from "../components/home/Intro.astro";
+import LatestPosts from "../components/home/LatestPosts.astro";
+import ProjectsPreview from "../components/home/ProjectsPreview.astro";
+import WorkPreview from "../components/home/WorkPreview.astro";
+import Container from "../components/ui/Container.astro";
+import { getPosts } from "../data/posts";
+import { getProjects } from "../data/projects";
+import { profile } from "../data/site";
+import { getWorkExperience } from "../data/work";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const posts = await getPosts();
+const projects = await getProjects();
+const workExperience = await getWorkExperience();
+
+const latestPosts = posts.slice(0, 3);
+const recentWork = workExperience.slice(0, 2);
+const recentProjects = projects.slice(0, 3);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Home" description={profile.defaultDescription}>
+  <Container>
+    <h1 class="animate font-semibold text-black dark:text-white">
+      {profile.greeting}
+      <span class="text-xl">👋🏻</span>
+    </h1>
+    <div class="mt-5 space-y-16">
+      <Intro />
+      <Connect />
+      <LatestPosts posts={latestPosts} />
+      <WorkPreview experiences={recentWork} />
+      <ProjectsPreview projects={recentProjects} />
+    </div>
+  </Container>
+</BaseLayout>

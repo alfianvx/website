@@ -1,0 +1,9 @@
+company: "VOCASIA"
+role: "Fullstack Developer Intern"
+period: "Aug 2024 - Dec 2024"
+highlights:
+  - "Built a bootcamp training course platform supporting cohort-based learning content and enrollment management."
+  - "Developed a Prakerja certification site, handling certification workflows for government-subsidized training programs."
+  - "Built an English TOEFL preparation site with structured practice modules."
+  - "Worked across both MySQL and MariaDB-backed systems, containerized with Docker for consistent environments."
+order: 3

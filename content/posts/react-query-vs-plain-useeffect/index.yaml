@@ -1,0 +1,7 @@
+title: "React Query vs. Plain useEffect"
+description: "When reaching for a data-fetching library actually pays off — and when it doesn't."
+pubDate: "2025-03-21"
+content:
+  - "This is a placeholder post for the portfolio demo. It exists so the blog section has something realistic to render while the real writing catches up."
+  - "A single fetch on mount is fine with useEffect. The problems start when data needs caching, background refetching, optimistic updates, or deduplication across components — at which point useEffect turns into a state machine you didn't sign up for."
+  - "The pragmatic rule I've landed on: if the same data is read by more than one component, or if users navigate back and forth between views, a dedicated query library earns its weight immediately."

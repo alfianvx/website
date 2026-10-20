@@ -1,0 +1,39 @@
+---
+import Container from "../ui/Container.astro";
+import TextLink from "../ui/TextLink.astro";
+import { navItems, profile } from "../../data/site";
+---
+
+<header>
+  <Container>
+    <div class="flex flex-wrap justify-between gap-y-2">
+      <a
+        href="/"
+        aria-label={`${profile.name} — home`}
+        class="inline-block transition-opacity duration-300 ease-in-out hover:opacity-75"
+      >
+        <img
+          src="/favicon.svg"
+          alt=""
+          width="24"
+          height="24"
+          class="size-6"
+          loading="eager"
+          decoding="async"
+        />
+      </a>
+      <nav class="flex gap-1" aria-label="Main">
+        {
+          navItems.map((item, index) => (
+            <>
+              {index > 0 && <span aria-hidden="true">/</span>}
+              <TextLink href={item.href} class="underline underline-offset-2">
+                {item.label}
+              </TextLink>
+            </>
+          ))
+        }
+      </nav>
+    </div>
+  </Container>
+</header>

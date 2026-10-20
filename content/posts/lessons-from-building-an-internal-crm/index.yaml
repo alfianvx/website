@@ -1,0 +1,7 @@
+title: "Lessons from Building an Internal CRM"
+description: "What shipping an internal tool taught me about designing for non-developers."
+pubDate: "2025-11-02"
+content:
+  - "This is a placeholder post for the portfolio demo. It exists so the blog section has something realistic to render while the real writing catches up."
+  - "Internal tools live or die by how little explanation they need. Every extra field, ambiguous label, or silent failure becomes a question in a chat channel. Designing for colleagues who don't care about the tech stack changes the priorities completely."
+  - "The biggest lesson: ship the boring CRUD first, watch how people actually use it, then automate the workflow they invent around it. The first version is rarely the workflow — it's the interview."

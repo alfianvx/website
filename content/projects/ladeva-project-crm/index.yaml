@@ -1,0 +1,14 @@
+title: "Ladeva Project CRM"
+description: "Internal project management CRM that streamlines company workflows and cross-project tracking."
+period: "2025"
+role: "Fullstack Developer @ Ladeva Software"
+tech:
+  - "React"
+  - "TypeScript"
+  - "Laravel"
+  - "MySQL"
+highlights:
+  - "Designed and built the core modules for tracking projects, tasks, and team assignments."
+  - "Turned existing spreadsheet-based workflows into structured, auditable application flows."
+  - "Shipped iteratively based on internal feedback from the team using it daily."
+order: 4

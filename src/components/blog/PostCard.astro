@@ -1,0 +1,16 @@
+---
+import type { Post } from "../../types";
+import CardLink from "../ui/CardLink.astro";
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+---
+
+<CardLink
+  href={`/blog/${post.slug}`}
+  title={post.title}
+  description={post.description}
+/>
